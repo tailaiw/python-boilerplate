@@ -15,31 +15,31 @@ I use [pipx](https://pypa.github.io/pipx/) to install these tools globally.
 1. Clone this repository.
 2. Add the following to your `.bashrc` or `.zshrc`. Note that you will need to change the value of `PYTHON_BOILERPLATE` to the path to the cloned repository.
 
-```bash
-export PYTHON_BOILERPLATE="$HOME/sandbox/python-boilerplate/"
+    ```bash
+    export PYTHON_BOILERPLATE="$HOME/sandbox/python-boilerplate/"
 
-# create a shell function `mkpythondir`
-mkpythondir() {( set -e
-  if [ ! -d "$(pwd)/$1" ]
-  then
-    rsync -r "$PYTHON_BOILERPLATE/" "$1" --exclude=".git" # copy template files
-    cd $1
-    mkdir "${1//[-.]/_}" && touch "${1//[-.]/_}/__init__.py" # create package
-    touch README.md && echo "# $1" > README.md # create README
-    git init && pre-commit autoupdate && pre-commit install # git and pre-commit
-    poetry init --name="$1" \
-      --dev-dependency=flake8 \
-      --dev-dependency=black \
-      --dev-dependency=isort \
-      --dev-dependency=mypy \
-      --no-interaction && \
-    poetry install # poetry
-    git add . && git commit -m "Initial commit" # initial commit
-  else
-    echo "Directory $(pwd)/$1 already exists"
-  fi
-)}
-```
+    # create a shell function `mkpythondir`
+    mkpythondir() {( set -e
+      if [ ! -d "$(pwd)/$1" ]
+      then
+        rsync -r "$PYTHON_BOILERPLATE/" "$1" --exclude=".git" # copy template files
+        cd $1
+        mkdir "${1//[-.]/_}" && touch "${1//[-.]/_}/__init__.py" # create package
+        touch README.md && echo "# $1" > README.md # create README
+        git init && pre-commit autoupdate && pre-commit install # git and pre-commit
+        poetry init --name="$1" \
+          --dev-dependency=flake8 \
+          --dev-dependency=black \
+          --dev-dependency=isort \
+          --dev-dependency=mypy \
+          --no-interaction && \
+        poetry install # poetry
+        git add . && git commit -m "Initial commit" # initial commit
+      else
+        echo "Directory $(pwd)/$1 already exists"
+      fi
+    )}
+    ```
 
 ## Usage
 
