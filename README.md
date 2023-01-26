@@ -10,11 +10,14 @@ This is a minimal Python project boilerplate I use as a starting point for new P
 
 I use [pipx](https://pypa.github.io/pipx/) to install these tools globally.
 
-## Usage
+## Installation
 
 1. Clone this repository.
 2. Add the following to your `.bashrc` or `.zshrc`. Note that you will need to change the value of `PYTHON_BOILERPLATE` to the path to the cloned repository.
-3. Run `mkpythondir <project-name>` to create a new project.
+
+## Usage
+
+Run `mkpythondir <project-name>` to create a new project.
 
 ```bash
 export PYTHON_BOILERPLATE="$HOME/sandbox/python-boilerplate/"
@@ -26,6 +29,7 @@ mkpythondir() {( set -e
     rsync -r "$PYTHON_BOILERPLATE/" "$1" --exclude=".git" # copy template files
     cd $1
     mkdir "${1//[-.]/_}" && touch "${1//[-.]/_}/__init__.py" # create package
+    touch README.md && echo "# $1" > README.md # create README
     git init && pre-commit autoupdate && pre-commit install # git and pre-commit
     poetry init --name="$1" \
       --dev-dependency=flake8 \
@@ -43,11 +47,11 @@ mkpythondir() {( set -e
 
 By running `mkpythondir <project-name>`, the following will happen:
 
-1. Create a directory with the project name.
-2. Create a Git repository.
+1. Create a directory with the project name and make it a git repository.
+2. Create an empty readme.
 3. Initialize pre-commit hooks for formatting ([black](https://black.readthedocs.io/) and [isort](https://pycqa.github.io/isort/)).
 4. Configure tox to run linter ([flake8](https://flake8.pycqa.org/) and [mypy](https://mypy.readthedocs.io/)).
-5. Create a Poetry virtual environment for the project with necessary development dependencies. I don't install black, isort, flake8, and mypy using pipx "globally" because different projects may requires different versions (you and your collaborators will hate each other if using different versions of black).
+5. Create a Poetry virtual environment for the project with necessary development dependencies. I don't install black, isort, flake8, or mypy using pipx "globally" because different projects may requires different versions (you and your collaborators will hate each other if using different versions of black).
 6. Make an initial commit.
 
 ## IDE Configuration
