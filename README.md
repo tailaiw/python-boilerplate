@@ -22,10 +22,10 @@ I use [pipx](https://pypa.github.io/pipx/) to install these tools globally.
     mkpythondir() {( set -e
       if [ ! -d "$(pwd)/$1" ]
       then
-        rsync -r "$PYTHON_BOILERPLATE/" "$1" --exclude=".git" # copy template files
+        rsync -r "$PYTHON_BOILERPLATE/" "$1" --exclude=".git" --exclude="README.md" # copy template files
         cd $1
         mkdir "${1//[-.]/_}" && touch "${1//[-.]/_}/__init__.py" # create package
-        touch README.md && echo "# $1" > README.md # create README
+        echo "# $1" > README.md # create README
         git init && pre-commit autoupdate && pre-commit install # git and pre-commit
         poetry init --name="$1" \
           --dev-dependency=flake8 \
