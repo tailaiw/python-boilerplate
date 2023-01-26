@@ -15,10 +15,6 @@ I use [pipx](https://pypa.github.io/pipx/) to install these tools globally.
 1. Clone this repository.
 2. Add the following to your `.bashrc` or `.zshrc`. Note that you will need to change the value of `PYTHON_BOILERPLATE` to the path to the cloned repository.
 
-## Usage
-
-Run `mkpythondir <project-name>` to create a new project.
-
 ```bash
 export PYTHON_BOILERPLATE="$HOME/sandbox/python-boilerplate/"
 
@@ -45,7 +41,9 @@ mkpythondir() {( set -e
 )}
 ```
 
-By running `mkpythondir <project-name>`, the following will happen:
+## Usage
+
+Run `mkpythondir <project-name>` to create a new project. The command does the following:
 
 1. Create a directory with the project name and make it a git repository.
 2. Create an empty readme.
