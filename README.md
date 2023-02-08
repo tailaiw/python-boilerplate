@@ -4,11 +4,12 @@ This is a minimal Python project boilerplate I use as a starting point for new P
 
 ## Prerequisites
 
+- [pyenv](https://github.com/pyenv/pyenv/)
 - [Poetry](https://python-poetry.org/)
 - [pre-commit](https://pre-commit.com/)
 - [tox](https://tox.readthedocs.io/)
 
-I use [pipx](https://pypa.github.io/pipx/) to install these tools globally.
+I use [pipx](https://pypa.github.io/pipx/) to install Poetry, pre-commit, and tox globally.
 
 ## Installation
 
@@ -20,20 +21,25 @@ I use [pipx](https://pypa.github.io/pipx/) to install these tools globally.
 
     # create a shell function `mkpythondir`
     mkpythondir() {( set -e
+      local pyversion="${2:-$(pyenv version | cut -d' ' -f1)}"
       if [ ! -d "$(pwd)/$1" ]
       then
         rsync -r "$PYTHON_BOILERPLATE/" "$1" --exclude=".git" --exclude="README.md" # copy template files
         cd $1
+        pyenv local $pyversion # set python version
         mkdir "${1//[-.]/_}" && touch "${1//[-.]/_}/__init__.py" # create package
         echo "# $1" > README.md # create README
         git init && pre-commit autoupdate && pre-commit install # git and pre-commit
-        poetry init --name="$1" \
+        poetry initp --name="$1" \
+          --python="$pyversion" \
           --dev-dependency=flake8 \
           --dev-dependency=black \
           --dev-dependency=isort \
           --dev-dependency=mypy \
           --no-interaction && \
-        poetry install # poetry
+          poetry env use $(pyenv version | cut -d' ' -f1) && \
+          poetry install # poetry
+        pyenv local --unset # unset python version
         git add . && git commit -m "Initial commit" # initial commit
       else
         echo "Directory $(pwd)/$1 already exists"
@@ -43,7 +49,7 @@ I use [pipx](https://pypa.github.io/pipx/) to install these tools globally.
 
 ## Usage
 
-Run `mkpythondir <project-name>` to create a new project. The command does the following:
+Run `mkpythondir <project-name> [python-version]` to create a new project. If Python version is not specified, use the global Python version configured by pyenv or the local Python version (if configured by pyenv) in the current directory. The command does the following:
 
 1. Create a directory with the project name and make it a git repository.
 2. Create an empty readme.
