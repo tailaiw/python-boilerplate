@@ -30,7 +30,7 @@ I use [pipx](https://pypa.github.io/pipx/) to install Poetry, pre-commit, and to
         mkdir "${1//[-.]/_}" && touch "${1//[-.]/_}/__init__.py" # create package
         echo "# $1" > README.md # create README
         git init && pre-commit autoupdate && pre-commit install # git and pre-commit
-        poetry initp --name="$1" \
+        poetry init --name="$1" \
           --python="$pyversion" \
           --dev-dependency=flake8 \
           --dev-dependency=black \
