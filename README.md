@@ -35,7 +35,7 @@ I use [pipx](https://pypa.github.io/pipx/) to install Poetry, pre-commit, and to
           --dev-dependency=flake8 \
           --dev-dependency=black \
           --dev-dependency=isort \
-          --dev-dependency=docformatter[tomli] \
+          --dev-dependency="docformatter[tomli]" \
           --dev-dependency=mypy \
           --no-interaction && \
           poetry env use $(pyenv version | cut -d' ' -f1) && \
