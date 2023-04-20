@@ -12,3 +12,9 @@ repos:
     rev: 5.11.4
     hooks:
       - id: isort
+  - repo: https://github.com/PyCQA/docformatter
+    rev: v1.6.0
+    hooks:
+      - id: docformatter
+        additional_dependencies: [tomli]
+        args: [--in-place, --config, ./pyproject.toml]

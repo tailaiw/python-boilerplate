@@ -35,6 +35,7 @@ I use [pipx](https://pypa.github.io/pipx/) to install Poetry, pre-commit, and to
           --dev-dependency=flake8 \
           --dev-dependency=black \
           --dev-dependency=isort \
+          --dev-dependency=docformatter[tomli] \
           --dev-dependency=mypy \
           --no-interaction && \
           poetry env use $(pyenv version | cut -d' ' -f1) && \
@@ -53,7 +54,7 @@ Run `mkpythondir <project-name> [python-version]` to create a new project. If Py
 
 1. Create a directory with the project name and make it a git repository.
 2. Create an empty readme.
-3. Initialize pre-commit hooks for formatting ([black](https://black.readthedocs.io/) and [isort](https://pycqa.github.io/isort/)).
+3. Initialize pre-commit hooks for formatting ([black](https://black.readthedocs.io/), [isort](https://pycqa.github.io/isort/), and [docformatter](https://docformatter.readthedocs.io/)).
 4. Configure tox to run linter ([flake8](https://flake8.pycqa.org/) and [mypy](https://mypy.readthedocs.io/)).
 5. Create a Poetry virtual environment for the project with necessary development dependencies. I don't install black, isort, flake8, or mypy using pipx "globally" because different projects may requires different versions (you and your collaborators will hate each other if using different versions of black).
 6. Make an initial commit.
