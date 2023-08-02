@@ -32,9 +32,8 @@ I use [pipx](https://pypa.github.io/pipx/) to install Poetry, pre-commit, and to
         git init && pre-commit autoupdate && pre-commit install # git and pre-commit
         poetry init --name="$1" \
           --python="$pyversion" \
-          --dev-dependency=flake8 \
           --dev-dependency=black \
-          --dev-dependency=isort \
+          --dev-dependency=ruff \
           --dev-dependency="docformatter[tomli]" \
           --dev-dependency=mypy \
           --no-interaction && \
@@ -50,13 +49,13 @@ I use [pipx](https://pypa.github.io/pipx/) to install Poetry, pre-commit, and to
 
 ## Usage
 
-Run `mkpythondir <project-name> [python-version]` to create a new project. If Python version is not specified, use the global Python version configured by pyenv or the local Python version (if configured by pyenv) in the current directory. The command does the following:
+Run `mkpythondir <project-name> [python-version]` to create a new project. If the Python version is not specified, use the global Python version configured by pyenv or the local Python version (if configured by pyenv) in the current directory. The command does the following:
 
-1. Create a directory with the project name and make it a git repository.
+1. Create a directory with the project name and make it a Git repository.
 2. Create an empty readme.
-3. Initialize pre-commit hooks for formatting ([black](https://black.readthedocs.io/), [isort](https://pycqa.github.io/isort/), and [docformatter](https://docformatter.readthedocs.io/)).
-4. Configure tox to run linter ([flake8](https://flake8.pycqa.org/) and [mypy](https://mypy.readthedocs.io/)).
-5. Create a Poetry virtual environment for the project with necessary development dependencies. I don't install black, isort, flake8, or mypy using pipx "globally" because different projects may requires different versions (you and your collaborators will hate each other if using different versions of black).
+3. Initialize pre-commit hooks for formatting [black](https://black.readthedocs.io/),  docstring formatter [docformatter](https://docformatter.readthedocs.io/), linter [ruff](https://beta.ruff.rs/docs/), and type checker [mypy](https://mypy.readthedocs.io/).
+4. Configure tox to run formatting and linting checks.
+5. Create a Poetry virtual environment for the project with necessary development dependencies. I don't install black, docformatter, ruff, or mypy using pipx "globally" because different projects may require different versions (you and your collaborators will hate each other if using different versions of black).
 6. Make an initial commit.
 
 ## IDE Configuration
@@ -64,6 +63,6 @@ Run `mkpythondir <project-name> [python-version]` to create a new project. If Py
 Related to the above but not necessary, I also use the following configuration in my IDE:
 
 1. Run black and isort on save.
-2. Enable mypy and flake8 linters.
+2. Enable mypy and ruff linters.
 
 This helps me to notice and fix issues before they are captured by pre-commit hooks or tox runs.
